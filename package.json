@@ -1,6 +1,6 @@
 {
   "name": "grain-gen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "code scaffolding for fast web development",
   "author": "Krishna Satya <vadapallikrishna@gmail.com>",
   "bin": {

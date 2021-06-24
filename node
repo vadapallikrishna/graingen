@@ -1,0 +1,9 @@
+options given  {
+  framework: 'react',
+  template: 'function',
+  varargs: [ 'text', 'email' ],
+  output: 'html',
+  input: true
+}
+using template function
+> 

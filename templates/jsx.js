@@ -1,23 +1,24 @@
 
 function form(types) {
-    form = ""; 
+    f = ""; 
     closetag = false;
-    for(i in types) {
+    types.forEach((i) => {
        if(i == "textarea")
-	    form = form + `<textarea></textarea>`;
+	    f = f + `<textarea></textarea>`;
        else if(i == "select")
 	    if(closetag){
 	        closetag = false;
-	        form = form + "</select>";
+	        f = f + "</select>";
             } else {
                closetag = true;
-	       form = form + "<select>";
+	       f = f + "<select>";
 	    }
        else if(i == "option")
-	    form = form + "<option></option>";
+	    f = f + "<option></option>";
        else
-            form = form + `<input type="${type}">`;
-    }
+            f = f + `<input type="${i}">`;
+    })
+    return f;
 }
 
 module.exports = {form: form}
