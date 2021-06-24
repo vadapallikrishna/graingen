@@ -1,0 +1,39 @@
+#!/bin/node
+
+const readline = require('readline');
+const { program } = require('commander');
+const templates = require('./templates');
+program.version('0.1');
+
+program.option('-l, --lang <name>', 'language to generate in');
+program.option('-f, --framework <name>', 'framework to use');
+program.option('-t, --template <name>', 'template to use');
+program.option('-i, --input', 'content to use');
+program.option('-f, --file', 'file to use');
+program.option('-o, --output <name>', 'output name');
+program.parse();
+
+const options = program.opts();
+
+console.log("options given ",program.opts());
+console.log("using template", templates);
+var input = "";
+if(options.input) {
+    let rl = readline.createInterface({
+	    input:process.stdin, 
+	    output: process.stdout,
+	    terminal: false
+    });
+    rl.on('SIGINT', function() {
+        console.log("error");
+    })	
+    rl.on('close', function() {
+        console.log(templates.react.reactclass(options.output, input));
+    })
+    rl.on('line', (line)=>{
+        input = input + line;
+    });
+    rl.prompt();
+} else {
+     console.log(templates.react.reactclass(options.output,"<p>output</p>"));
+}

@@ -1,0 +1,12 @@
+{
+  "name": "grain-gen",
+  "version": "0.0.2",
+  "description": "code scaffolding for fast web development",
+  "author": "Krishna Satya <vadapallikrishna@gmail.com>",
+  "bin": {
+    "graingen": "node gg"
+  },
+  "dependencies": {
+    "commander": "^7.2.0"
+  }
+}
