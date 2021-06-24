@@ -9,14 +9,23 @@ program.option('-l, --lang <name>', 'language to generate in');
 program.option('-f, --framework <name>', 'framework to use');
 program.option('-t, --template <name>', 'template to use');
 program.option('-i, --input', 'content to use');
-program.option('-f, --file', 'file to use');
+program.option('-f, --file <name>', 'file to use');
 program.option('-o, --output <name>', 'output name');
 program.parse();
 
 const options = program.opts();
-
 console.log("options given ",program.opts());
-console.log("using template", templates);
+const template = options.template;
+console.log("using template", template);
+let templatefun;
+if(options.framework == "react")
+    if(options.template == "function")
+        templatefun = templates.react.reactfunction;
+    else if(options.template == "class")
+	templatefun = templates.react.reactclass;
+    else if(options.template == "form")
+	templatefun = templates.jsx.form;
+
 var input = "";
 if(options.input) {
     let rl = readline.createInterface({
@@ -28,12 +37,12 @@ if(options.input) {
         console.log("error");
     })	
     rl.on('close', function() {
-        console.log(templates.react.reactclass(options.output, input));
+        console.log(templatefun(options.output, input));
     })
     rl.on('line', (line)=>{
         input = input + line;
     });
     rl.prompt();
 } else {
-     console.log(templates.react.reactclass(options.output,"<p>output</p>"));
+     console.log(templatefun(options.output,"<p>output</p>"));
 }
