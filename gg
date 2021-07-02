@@ -5,6 +5,8 @@ const { program } = require('commander');
 const templates = require('./templates');
 program.version('0.1');
 
+program.command('create').arguments('[name]').action(create);
+
 program.option('-s, --silent', 'be silent');
 program.option('-l, --lang <name>', 'language to generate in');
 program.option('-f, --framework <name>', 'framework to use');
@@ -15,7 +17,9 @@ program.option('-f, --file <name>', 'file to use');
 program.option('-o, --output <name>', 'output name');
 program.parse();
 
+
 const options = program.opts();
+if(true) {
 if(!options.silent)
     console.log("options given ",program.opts());
 const template = options.template;
@@ -52,4 +56,8 @@ if(options.input) {
          console.log(templatefun(options.varargs));
      else
          console.log(templatefun(options.output,"<p>output</p>"));
+}
+}
+function create(name) {
+    console.log(name);
 }
