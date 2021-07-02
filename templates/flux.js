@@ -11,14 +11,22 @@ function addfield(store,field) {
 function returnflux(name) {
     return `
        const dispatch = new (class Dispatcher {
-           static callstore(store,action) {    
-               Object.assign(store,action) 
-	   }
+           callbacks = [];
+           register(fn) {
+                callbacks.push(fn);
+           }
+
+           unregister(id) {}
+
+           static dispatch() {    
+               let store = Object.assign(store,action);
+               callbacks.forEach((callback)=>callback(store));
+	       }
        })
     `
 }
 
-function store(name,fields) {
+function store(fields) {
     return `module.exports = {
 	${fields.map((name)=>`${name}: undefined,`)}
     }`

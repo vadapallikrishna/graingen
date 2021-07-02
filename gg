@@ -6,57 +6,63 @@ const templates = require('./templates');
 program.version('0.1');
 
 program.command('create').arguments('[name]').action(create);
-
-program.option('-s, --silent', 'be silent');
-program.option('-l, --lang <name>', 'language to generate in');
-program.option('-f, --framework <name>', 'framework to use');
-program.option('-t, --template <name>', 'template to use');
-program.option('-i, --input', 'content to use');
-program.option('-c, --varargs <values...>', 'space seperated input');
-program.option('-f, --file <name>', 'file to use');
-program.option('-o, --output <name>', 'output name');
+program.command('test');
+program.command('run');
+program.command('deploy');
+program.command("",{isDefault:true})
+.option('-s, --silent', 'be silent')
+.option('-l, --lang <name>', 'language to generate in')
+.option('-f, --framework <name>', 'framework to use')
+.option('-t, --template <name>', 'template to use')
+.option('-i, --input', 'content to use')
+.option('-c, --varargs <values...>', 'space seperated input')
+.option('-f, --file <name>', 'file to use')
+.option('-o, --output <name>', 'output name')
+.action(generate);
 program.parse();
 
 
-const options = program.opts();
-if(true) {
-if(!options.silent)
-    console.log("options given ",program.opts());
-const template = options.template;
-if(!options.silent)
-    console.log("using template", template);
-let templatefun;
-if(options.framework == "react")
-    if(options.template == "function")
-        templatefun = templates.react.reactfunction;
-    else if(options.template == "class")
-	templatefun = templates.react.reactclass;
-    else if(options.template == "form")
-	templatefun = templates.jsx.form;
 
-var input = "";
-if(options.input) {
-    let rl = readline.createInterface({
-	    input:process.stdin, 
-	    output: process.stdout,
-	    terminal: false
-    });
-    rl.on('SIGINT', function() {
-        console.log("error");
-    })	
-    rl.on('close', function() {
-        console.log(templatefun(options.output, input));
-    })
-    rl.on('line', (line)=>{
-        input = input + line;
-    });
-    rl.prompt();
-} else {
-     if(options.varargs)
-         console.log(templatefun(options.varargs));
-     else
-         console.log(templatefun(options.output,"<p>output</p>"));
-}
+
+function generate() {
+    const options = program.opts();
+        if(!options.silent)
+            console.log("options given ",program.opts()); 
+            const template = options.template;
+        if(!options.silent)
+            console.log("using template", template);
+        let templatefun;
+        if(options.framework == "react")
+            if(options.template == "function")
+                templatefun = templates.react.reactfunction;
+            else if(options.template == "class")
+	            templatefun = templates.react.reactclass;
+            else if(options.template == "form")
+	            templatefun = templates.jsx.form;
+
+        var input = "";
+        if(options.input) {
+            let rl = readline.createInterface({
+	            input:process.stdin, 
+	            output: process.stdout,
+	            terminal: false
+            });
+            rl.on('SIGINT', function() {
+                console.log("error");
+            })	
+            rl.on('close', function() {
+                console.log(templatefun(options.output, input));
+            })
+            rl.on('line', (line)=>{
+                input = input + line;
+            });
+            rl.prompt();
+        } else {
+            if(options.varargs)
+                console.log(templatefun(options.varargs));
+            else
+                console.log(templatefun(options.output,"<p>output</p>"));
+        }
 }
 function create(name) {
     console.log(name);
